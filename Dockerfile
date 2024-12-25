@@ -3,6 +3,8 @@ FROM ghcr.io/lescai-teaching/rstudio-docker-amd64:latest
 # Set environment variables
 ENV PASSWORD 'rstudio'
 ENV PATH ${PATH}:/opt/software/bin
+ENV PORT 8787         # Default RStudio Server port
+ENV DISABLE_AUTH true # Disable authentication for RStudio
 
 # Set working directory
 WORKDIR /home/rstudio
@@ -23,7 +25,7 @@ RUN echo "auth-root-enabled=1" >> /etc/rstudio/rserver.conf && \
     echo "sudo su -" > /home/rstudio/.Rprofile && \
     chown rstudio:rstudio /home/rstudio/.Rprofile
 
-# Expose the necessary ports (for RStudio Server, for example)
+# Expose the necessary ports
 EXPOSE 8787
 
 # Set the entrypoint or CMD as needed
