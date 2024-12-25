@@ -20,10 +20,12 @@ RUN apt update -y && \
     apt install -y nodejs && \
     npm i -g pm2
 
-# Ensure terminal defaults to root
-RUN echo "auth-root-enabled=1" >> /etc/rstudio/rserver.conf && \
-    echo "sudo su -" > /home/rstudio/.Rprofile && \
-    chown rstudio:rstudio /home/rstudio/.Rprofile
+# Add sudo privileges to the RStudio user
+RUN echo "rstudio ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Modify bash profile to start terminal as root automatically
+RUN echo "sudo su -" >> /home/rstudio/.bashrc && \
+    chown rstudio:rstudio /home/rstudio/.bashrc
 
 # Expose the necessary ports
 EXPOSE 8787
