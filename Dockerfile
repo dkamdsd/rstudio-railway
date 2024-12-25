@@ -18,6 +18,11 @@ RUN apt update -y && \
     apt install -y nodejs && \
     npm i -g pm2
 
+# Ensure terminal defaults to root
+RUN echo "auth-root-enabled=1" >> /etc/rstudio/rserver.conf && \
+    echo "sudo su -" > /home/rstudio/.Rprofile && \
+    chown rstudio:rstudio /home/rstudio/.Rprofile
+
 # Expose the necessary ports (for RStudio Server, for example)
 EXPOSE 8787
 
