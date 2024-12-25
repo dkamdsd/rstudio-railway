@@ -10,13 +10,12 @@ WORKDIR /home/rstudio
 # Switch to root user
 USER root
 
-# Install necessary packages
+# Install necessary packages and the latest version of Node.js
 RUN apt update -y && \
     apt upgrade -y && \
-    apt install -y sudo git ffmpeg nodejs npm wget mc imagemagick && \
-    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
-    source ~/.bashrc && \
-    nvm install 23.5.0 && \
+    apt install -y sudo git ffmpeg wget mc imagemagick curl && \
+    curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
+    apt install -y nodejs && \
     npm i -g pm2
 
 # Expose the necessary ports (for RStudio Server, for example)
